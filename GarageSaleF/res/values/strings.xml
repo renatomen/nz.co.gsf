@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Application -->
+  	<string name="app_name">Garage Sales Finder</string>
+  	<string name="title_activity_main">Garage Sales Finderssss</string>
+  	<string name="title_activity_about">About</string>
+    <string name="title_activity_garagesale">Garage Sale</string>
+    
+    <!-- Tabs -->
+    <string name="tab_title_list">List</string>
+    <string name="tab_title_map">Map</string>
+    
+  	<!-- Menu -->
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_about">About</string>
+    <string name="menu_settings">Settings</string>
+	
+	<!-- Messages -->
+    <string name="no_garagesales">No garage sales found!</string>
+
+    <!-- Garage Sale Detail Page Items -->
+    <string name="date_heading_text">DATE/TIME</string>
+    <string name="address_heading_text">ADDRESS</string>
+    <string name="suburb_heading_text">SUBURB</string>
+    <string name="region_heading_text">REGION</string>
+    <string name="distance_heading_text">RADIAL DISTANCE</string>
+    <string name="description_heading_text">DESCRIPTION</string>
+    <string name="url_heading_text">URL</string>
+
+    <!-- Email Items -->
+    <string name="mailSubject">Check this Garage Sale</string>
+    <string name="mailBody_intro">Hi,\n\nI though you might want to have a look at this garage sale.</string>
+    <string name="mailBody_where">It will be at </string>
+    <string name="mailBody_when">on </string>
+    <string name="mailBody_close">Cheers,</string>
+
+    <!-- Preference Page Items -->
+    <string name="pref_apiServer_url">API Server URL</string>
+    <string name="pref_apiServer_url_summ">%s</string>
+    <string name="pref_maxDisplayDistance">Distance Threshold</string>
+    <string name="pref_maxDisplayDistance_summ">Displaying garage sales within %s kilometre(s) radius</string>
+    <string name="pref_maxHighlightDistance">Highlight Distance</string>
+    <string name="pref_maxHighlightDistance_summ">Highlight garage sales within %s kilometre(s) radius</string>
+    <string name="pref_maxNumGaragesalesToShow">Max Number of Garage Sales</string>
+    <string name="pref_maxNumGaragesalesToShow_summ">Show up to %s garage sales</string>
+
+    <!-- About Page Items -->
+    <string name="about_app_detail">Garage-Sale Finder uses the Garage-Sale.co.nz data
+        to provide you with up to date information about the latest garage sales around New Zealand.
+    </string>
+    <string name="about_app_heading">The App</string>
+    <string name="lblCopyright">ISCG7424 – Mobile Software Development
+				  	\nAssignment 3: Garage Sales Finder
+  					\nStudent: Paul Shalley		(ID:1402195)
+  					\nStudent: Renato De Mendonca	(ID:1422497)
+  					\nStudent: Sergey Seriakov 	(ID:1405156)
+  					\nLecturer: Dr. John Casey
+  					\nUnitec, Auckland. 2014
+	</string>
+ 
+</resources>

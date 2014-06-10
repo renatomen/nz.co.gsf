@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  
+   	Layout of the fragment that displays the details of a garage sale.
+   	Also displays the buttons that trigger SendMail, GoToWebsite, Route and Navigation
+    
+    --> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/detail_fragment_padding"
+    android:weightSum="30" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+         >
+
+    	<nz.co.gsf.views.TypefacedTextView
+    	    style="@style/GaragesaleDetailFragmentFont.Heading"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/date_heading_text" />
+    
+    	<nz.co.gsf.views.TypefacedTextView
+    	    android:id="@+id/date_detail_field"
+    	    style="@style/GaragesaleDetailFragmentFont.Detail"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	     />
+    	
+    	<nz.co.gsf.views.TypefacedTextView
+    	    style="@style/GaragesaleDetailFragmentFont.Heading"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_marginLeft="10dp"
+    	    android:text="@string/region_heading_text" />
+    
+    	<nz.co.gsf.views.TypefacedTextView
+    	    android:id="@+id/region_detail_field"
+    	    style="@style/GaragesaleDetailFragmentFont.Detail"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	     />
+
+	</LinearLayout>
+	
+    <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+          >
+
+    	<nz.co.gsf.views.TypefacedTextView
+    	    style="@style/GaragesaleDetailFragmentFont.Heading"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/address_heading_text" />
+    
+    	<nz.co.gsf.views.TypefacedTextView
+    	    android:id="@+id/address_detail_field"
+    	    style="@style/GaragesaleDetailFragmentFont.Detail"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    />
+
+	</LinearLayout>
+	
+    <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
+
+    	<nz.co.gsf.views.TypefacedTextView
+    	    style="@style/GaragesaleDetailFragmentFont.Heading"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/suburb_heading_text" />
+    
+    	<nz.co.gsf.views.TypefacedTextView
+    	    android:id="@+id/suburb_detail_field"
+    	    style="@style/GaragesaleDetailFragmentFont.Detail"
+    	    android:layout_marginLeft="20dp"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	     />
+    	
+    	<nz.co.gsf.views.TypefacedTextView
+    	    style="@style/GaragesaleDetailFragmentFont.Heading"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_marginLeft="30dp"
+    	    android:text="@string/distance_heading_text" />
+    
+    	<nz.co.gsf.views.TypefacedTextView
+    	    android:id="@+id/distance_detail_field"
+    	    style="@style/GaragesaleDetailFragmentFont.Detail"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"/>
+    	    
+    	
+	</LinearLayout>
+	
+    <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         >
+    
+    <nz.co.gsf.views.TypefacedTextView
+        style="@style/GaragesaleDetailFragmentFont.Heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description_heading_text" />
+    
+    	<nz.co.gsf.views.TypefacedTextView
+    	    android:id="@+id/description_detail_field"
+    	    style="@style/GaragesaleDetailFragmentFont.Detail"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:maxLines="9"
+    	    android:scrollbars="vertical"
+    	    android:fadeScrollbars="false"
+    	    android:scrollbarAlwaysDrawVerticalTrack="true"
+    	    android:background="@color/white"
+    	    
+    	     />
+
+    </LinearLayout>
+    
+   <RelativeLayout
+       android:layout_width="fill_parent"
+       android:layout_height="64dp"
+       android:layout_alignParentLeft="true" >
+
+        <ImageView
+            android:id="@+id/externalNavigation_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/directions_button"
+            android:layout_marginRight="14dp"
+            android:src="@drawable/gps_icon" />
+
+        <ImageView
+            android:id="@+id/directions_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/goToWebsite_button"
+            android:layout_marginRight="26dp"
+            android:layout_toLeftOf="@+id/externalNavigation_button"
+            android:src="@drawable/get_directions" />
+
+        <ImageView
+            android:id="@+id/goToWebsite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sendMail_button"
+            android:layout_marginRight="18dp"
+            android:layout_toLeftOf="@+id/directions_button"
+            android:src="@drawable/navigate_web" />
+
+        <ImageView
+            android:id="@+id/sendMail_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="21dp"
+            android:layout_toLeftOf="@+id/goToWebsite_button"
+            android:src="@drawable/send_mail" />
+
+    </RelativeLayout>
+
+</LinearLayout>

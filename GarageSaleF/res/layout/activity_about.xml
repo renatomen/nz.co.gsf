@@ -1,0 +1,91 @@
+<!--  
+   	Layout used by the ABOUT activity 
+    
+    --> 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+
+        <TextView
+            style="@style/AboutActivityFont.Heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_app_heading" />
+
+        <TextView
+            style="@style/AboutActivityFont.Detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:text="@string/about_app_detail"
+            tools:context=".AboutActivity" />
+
+        <TextView
+            style="@style/AboutActivityFont.Heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lblCopyright" />
+
+       
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/lightGrey"
+                android:gravity="bottom|left"
+                android:text="New Text"
+                 />
+
+            <TextView
+                android:id="@+id/cView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/lightGrey"
+                android:gravity="bottom|right"
+                android:singleLine="false"
+                android:text="Searching..."
+                 />
+
+            <TextView
+                android:id="@+id/prvdView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/lightGrey"
+               android:gravity="center_horizontal|bottom"
+                android:text="No signal" />
+
+    
+        <EditText
+            android:id="@+id/editDistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/lightGrey"
+            android:editable="false"
+            android:ems="10"
+            android:enabled="false"
+            android:focusable="false"
+            android:gravity="bottom"
+            android:inputType="textFilter|textMultiLine|textPostalAddress"
+            android:maxLines="3"
+            android:minLines="1"
+            android:singleLine="false"/>
+
+	
+</LinearLayout>
+</ScrollView>

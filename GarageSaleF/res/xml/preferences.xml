@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:custom="http://schemas.android.com/apk/res/nz.co.gsf">
+
+     <EditTextPreference
+        android:defaultValue="http://www.garage-sales.co.nz/api.xml"
+        android:key="pref_apiServer_url"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autoText="true"
+        android:title="@string/pref_apiServer_url"/>
+    
+     <nz.co.gsf.preferences.SeekBarPreference
+        android:defaultValue="25"
+        android:key="pref_maxDisplayDistance"
+        custom:seekBarMin="0"
+        android:max="1000"
+        android:text=" Kilometres"
+        android:title="@string/pref_maxDisplayDistance"/>
+
+    <nz.co.gsf.preferences.SeekBarPreference
+        android:defaultValue="40"
+        android:key="pref_maxHighlightDistance"
+        custom:seekBarMin="0"
+        android:max="200"
+        android:text=" Kilometres"
+        android:title="@string/pref_maxHighlightDistance"/>
+
+    <nz.co.gsf.preferences.SeekBarPreference
+        android:defaultValue="20"
+        android:key="pref_numGarageSalesToShow"
+        android:max="300"
+        android:text=" Garage Sales"
+        android:title="@string/pref_maxNumGaragesalesToShow"
+        custom:seekBarMin="0"/>
+
+</PreferenceScreen>

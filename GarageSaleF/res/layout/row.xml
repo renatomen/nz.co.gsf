@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  
+   	Layout used by the ROW in the Garage Sale list.
+   	The row is filled up by the GarageSaleArrayAdapter
+    
+    --> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_row_item_height"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="@dimen/list_row_item_distance_layout_width"
+        android:layout_margin="5dp"
+        android:layout_weight="0.20"
+        android:orientation="vertical" >
+  		  	<nz.co.gsf.views.TypefacedTextView
+        		android:id="@+id/distance"
+        		style="@style/ListFont.Distance"
+      			 />
+    
+    		<nz.co.gsf.views.TypefacedTextView
+        		android:id="@+id/km"
+        		android:text="Km"
+        		android:layout_height="@dimen/list_row_item_secondary_layout_height"
+        		android:layout_width="fill_parent"
+        		android:textSize="@dimen/list_row_item_secondary_text_size"
+        		android:gravity="center"
+        		/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="233dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.80"
+        android:orientation="vertical" >
+
+        <nz.co.gsf.views.TypefacedTextView
+            android:id="@+id/location"
+            style="@style/ListFont.Primary" />
+
+        <nz.co.gsf.views.TypefacedTextView
+            android:id="@+id/date"
+            style="@style/ListFont.Secondary" />
+        
+        <nz.co.gsf.views.TypefacedTextView
+            android:id="@+id/address"
+            style="@style/ListFont.Secondary" />
+    </LinearLayout>
+
+</LinearLayout>
