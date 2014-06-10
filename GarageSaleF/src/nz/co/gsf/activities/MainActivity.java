@@ -56,8 +56,7 @@ public class MainActivity extends ActionBarActivity implements
 	
 	GarageSaleArrayAdapter adapter;
     
-	
-    final String tag = "GSF:Main";
+	final String tag = "GSF:Main";
 
    
     /**
