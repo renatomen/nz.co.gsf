@@ -42,8 +42,8 @@ import android.widget.TextView;
  *
  */
 public class MainActivity extends ActionBarActivity implements 
-		OnSharedPreferenceChangeListener, ActionBar.TabListener, GarageSaleTapListener,
-		LoaderManager.LoaderCallbacks<ArrayList<GarageSale>>{
+		OnSharedPreferenceChangeListener, ActionBar.TabListener, GarageSaleTapListener
+{
 
 	
 	private NZMapFragment mMapFragment;
@@ -231,7 +231,7 @@ public class MainActivity extends ActionBarActivity implements
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		 mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
-	     if(mDownloading) mRefreshMenuItem.setVisible(false);
+	     //if(mDownloading) mRefreshMenuItem.setVisible(false);
 		return true;
 	}
 
@@ -378,8 +378,49 @@ public class MainActivity extends ActionBarActivity implements
 
     	mDownloading = true;
         showProgress();
-               
-        getSupportLoaderManager().initLoader(0, null, this);
+        ArrayList<GarageSale> results =  GarageSaleApi.getGarageSalesFromServer(getApplicationContext());      
+        
+        AlertDialog.Builder builderNoConnection = new AlertDialog.Builder(this);
+        builderNoConnection.setTitle("No Connection")
+        .setMessage(
+                "There appears to be a problem "
+                        + "with the connection. Last downloaded "
+                        + "data will be used.")
+        .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				ArrayList<GarageSale> resultsLocal;
+				
+				resultsLocal=GarageSaleApi.getGarageSalesFromFile(getApplicationContext());
+				
+				AlertDialog.Builder builderNoFile = new AlertDialog.Builder(MainActivity.this);
+				builderNoFile.setTitle("No Stored Data")
+							.setMessage(
+											"There are no Garage Sales "
+											+ "Stored locally. Connect to "
+											+ "Internet to download from server.")
+							.setNeutralButton("Close", null);
+				
+				 	if (null == resultsLocal || (resultsLocal.size() == 0)) {
+		                    AlertDialog dialogNoFile = builderNoFile.create();
+							dialogNoFile.show();
+		                    resultsLocal = new ArrayList<GarageSale>();
+		            }
+		            
+		            mGarageSales = resultsLocal;
+		            updateGarageSalesDisplay();
+			}  
+			});
+        AlertDialog dialogNoConnection = builderNoConnection.create();
+        
+        if (null == results) {
+        	dialogNoConnection.show();
+        }
+       
+        mGarageSales = results;
+        hideProgress();
+        updateGarageSalesDisplay();
         
         
         
@@ -417,75 +458,6 @@ public class MainActivity extends ActionBarActivity implements
       
     }
     
-    @Override
-    public Loader<ArrayList<GarageSale>> onCreateLoader(int i, Bundle bundle) {
-	     Log.d("XXX", "OnCreateLoader ");
-
-    	AsyncTaskLoader<ArrayList<GarageSale>> loader = new AsyncTaskLoader<ArrayList<GarageSale>>(this) {
-            @Override
-            public ArrayList<GarageSale> loadInBackground() {
-            	return GarageSaleApi.getGarageSalesFromServer(this.getContext());	
-            }
-        };
-        loader.forceLoad();
-        return loader;
-    }
-    
-    @Override
-    public void onLoadFinished(Loader<ArrayList<GarageSale>> objectLoader, ArrayList<GarageSale> results) {
-	     Log.d("XXX", "onLoadFinished ");
-	     
-    	mDownloading = false;
-        getLoaderManager().destroyLoader(0); 
-        hideProgress();
-        AlertDialog.Builder builderNoConnection = new AlertDialog.Builder(MainActivity.this);
-        builderNoConnection.setTitle("No Connection")
-        .setMessage(
-                "There appears to be a problem "
-                        + "with the connection. Last downloaded "
-                        + "data will be used.")
-        .setPositiveButton("Close", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				ArrayList<GarageSale> resultsLocal;
-				
-				resultsLocal=GarageSaleApi.getGarageSalesFromFile(getApplicationContext());
-				
-				AlertDialog.Builder builderNoFile = new AlertDialog.Builder(MainActivity.this);
-				builderNoFile.setTitle("No Stored Data")
-							.setMessage(
-											"There are no Garage Sales "
-											+ "Stored locally. Connect to "
-											+ "Internet to download from server.")
-							.setNeutralButton("Close", null);
-				
-				 	if (null == resultsLocal || (resultsLocal.size() == 0)) {
-		                    AlertDialog dialogNoFile = builderNoFile.create();
-							dialogNoFile.show();
-		                    resultsLocal = new ArrayList<GarageSale>();
-		            }
-		            
-		            mGarageSales = resultsLocal;
-		            updateGarageSalesDisplay();
-			}  
-			});
-        AlertDialog dialogNoConnection = builderNoConnection.create();
-        if (null == results) {
-            
-        	dialogNoConnection.show();
-        }
-       
-        mGarageSales = results;
-        updateGarageSalesDisplay();
-    }
-    
-    @Override
-    public void onLoaderReset(Loader<ArrayList<GarageSale>> objectLoader) {
-	     Log.d("XXX", "onLoaderReset ");
-
-    }
-
 	@Override
 	public void onGarageSaleLostFocus(GarageSale GarageSaleItem) {
 		// TODO Auto-generated method stub

@@ -78,7 +78,7 @@ public class GarageSaleApi {
 		GarageSaleApi.context = c;
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		
-		Looper.prepare();
+		//Looper.prepare();
 		//myprogress = ProgressDialog.show(context, "Refreshing Sale List", "Please Wait", true, false);
 		
 		// set up our message - used to convey progress information
