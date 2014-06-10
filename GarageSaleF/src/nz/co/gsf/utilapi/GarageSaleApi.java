@@ -212,8 +212,7 @@ public class GarageSaleApi {
 	
 	public static LatLng getCurrentLocation(Context c){
 		context = c;
-		
-		 
+	
 		LocationManager locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_LOW);

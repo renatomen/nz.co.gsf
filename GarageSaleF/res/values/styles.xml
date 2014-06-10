@@ -28,7 +28,7 @@
     <style name="ListFont.Distance">
         <item name="android:textSize">@dimen/list_row_item_distance_text_size</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_width">@dimen/list_row_item_distance_layout_width</item>
+        <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">@dimen/list_row_item_distance_layout_height</item>
         <item name="android:layout_margin">@dimen/list_row_item_distance_layout_margin</item>
         <item name="android:textColor">?android:textColorPrimary</item>

@@ -44,10 +44,15 @@ public class NZMapFragment extends SupportMapFragment implements GoogleMap.OnMar
         mMarkerImageContainer = new HashMap<String, BitmapDescriptor>();
         mDefaultCameraPosition = new CameraPosition(new LatLng(NZ_CENTRE_LATITUDE, NZ_CENTRE_LONGITUDE), // target
                 // TODO Zoom should probably change with device...
-                9, // zoom
+                5, // zoom
                 0, // tilt
                 0); // bearing
-    }
+      /*  mDefaultCameraPosition = new CameraPosition(GarageSaleApi.getCurrentLocation(), // target
+                // TODO Zoom should probably change with device...
+                9, // zoom
+                0, // tilt
+                0); // bearing 
+*/    }
 
     public static NZMapFragment newInstance() {
         return new NZMapFragment();
@@ -65,9 +70,11 @@ public class NZMapFragment extends SupportMapFragment implements GoogleMap.OnMar
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);  
+       
         setInitialCameraPosition(savedInstanceState);
         updateOverlayItems();
+      
     }
 
     @Override
@@ -83,11 +90,6 @@ public class NZMapFragment extends SupportMapFragment implements GoogleMap.OnMar
     private void setInitialCameraPosition(Bundle savedInstanceState) {
         GoogleMap map = getMap();
         if (map == null) return;
-        mDefaultCameraPosition = new CameraPosition(GarageSaleApi.getCurrentLocation(getActivity()), // target
-                // TODO Zoom should probably change with device...
-                9, // zoom
-                0, // tilt
-                0); // bearing        
         CameraPosition camPosition = null;
         if (savedInstanceState != null) {
             camPosition = savedInstanceState.getParcelable("mapPosition");

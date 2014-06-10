@@ -23,14 +23,15 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.app.AlertDialog;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -52,6 +53,9 @@ public class MainActivity extends ActionBarActivity implements
 	private boolean mPreferencesUpdated;
 
 	private int mMaxDistance, mMaxNumberOfGarageSales;
+	
+	GarageSaleArrayAdapter adapter;
+    
 	
     final String tag = "GSF:Main";
 
@@ -75,7 +79,6 @@ public class MainActivity extends ActionBarActivity implements
      * The currently selected tab.
      */
     private String mSelectedTab;
-    //private boolean mTabletMode;
 
   
 	/**
@@ -96,9 +99,9 @@ public class MainActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// Set defaults before we do anything else.
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        
+        Log.d("XXX", "OnCreate");
         // Request Feature must be called before adding content.
-        // Note this turns it on by default, ABS thing (so only on 2.x devices).
+        // Note this turns it on by default (so only on 2.x devices).
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -181,7 +184,7 @@ public class MainActivity extends ActionBarActivity implements
 	            }
 	            
 	        }
-
+	        
 	        updateItemsFromPreferences();
 	        updateGarageSalesDisplay();
 	}
@@ -189,6 +192,7 @@ public class MainActivity extends ActionBarActivity implements
 	 @Override
 	 protected void onSaveInstanceState(Bundle outState) {
 	     super.onSaveInstanceState(outState);
+	     Log.d("XXX", "onSaveInstanceState");
 	     outState.putString("mSelectedTab", mSelectedTab);
 	     outState.putParcelableArrayList("mGarageSales", mGarageSales);
 	     outState.putBoolean("mDownloading", mDownloading);
@@ -198,6 +202,7 @@ public class MainActivity extends ActionBarActivity implements
 	 @Override
 	 protected void onResume() {
 	     super.onResume();
+	     Log.d("XXX", "onResume");
 	     PreferenceManager.getDefaultSharedPreferences(this)
 	            .registerOnSharedPreferenceChangeListener(this);
 	     if (mPreferencesUpdated) {
@@ -205,9 +210,12 @@ public class MainActivity extends ActionBarActivity implements
 	         updateItemsFromPreferences();
 	         downloadGarageSales();
 	     }
+	     
 	 }
 
 	 private void updateItemsFromPreferences() {
+	     Log.d("XXX", "updateItemsFromPreferences");
+
 	      SharedPreferences prefs = PreferenceManager
 	              .getDefaultSharedPreferences(this);
 	      mMaxNumberOfGarageSales = prefs.getInt(
@@ -218,6 +226,7 @@ public class MainActivity extends ActionBarActivity implements
 	    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+	     Log.d("XXX", "onCreateOptionsMenu");
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
@@ -231,7 +240,8 @@ public class MainActivity extends ActionBarActivity implements
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		
+	     Log.d("XXX", "onOptionsItemSelected");
+
 		if (item.getItemId() == R.id.menu_about) {
             startActivity(new Intent(this, AboutActivity.class));
 		} else if (item.getItemId() == R.id.menu_preferences)
@@ -248,6 +258,8 @@ public class MainActivity extends ActionBarActivity implements
 	 @Override
 	    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 	                                          String key) {
+	     Log.d("XXX", "onSharedPreferenceChanged");
+
 	        if (key.equals(GSPreferenceActivity.KEY_PREF_MAX_DISPLAY_DISTANCE)
 	                || key.equals(GSPreferenceActivity.KEY_PREF_MAX_HIGHLIGHT_DISTANCE)
 	                || key.equals(GSPreferenceActivity.KEY_PREF_NUM_GARAGESALES_TO_SHOW)) {
@@ -261,6 +273,8 @@ public class MainActivity extends ActionBarActivity implements
 			FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
+	     Log.d("XXX", "onTabSelected");
+
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 
@@ -290,6 +304,7 @@ public class MainActivity extends ActionBarActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a PlaceholderFragment (defined as a static inner class
 			// below).
+		     Log.d("XXX", "Fragment getItem");
 
 			switch (position) {
 			case 0:
@@ -318,15 +333,20 @@ public class MainActivity extends ActionBarActivity implements
      * {@link #mgaragesales} first, then call this method.
      */
     private void updateGarageSalesDisplay() {
-        updateGarageSalesList();
+	     Log.d("XXX", "updateGarageSalesDisplay ");
+
+    	updateGarageSalesList();
         updateGarageSalesMap();
+        
     }
     
     /**
      * Updates the map view. Please use {@link #updategaragesalesDisplay} instead.
      */
     private void updateGarageSalesMap() {
-        if (null == mGarageSales || null == mMapFragment)
+	     Log.d("XXX", "updateGarageSalesMap ");
+
+    	if (null == mGarageSales || null == mMapFragment)
             return;
         mMapFragment.setGarageSales(GarageSaleFilter.filterGarageSales(mGarageSales, ((float) mMaxDistance) , mMaxNumberOfGarageSales,search.getQuery()));
     }
@@ -335,11 +355,13 @@ public class MainActivity extends ActionBarActivity implements
      * Updates the list view. Please use {@link #updategaragesalesDisplay} instead.
      */
     private void updateGarageSalesList() {
-        if (null == mGarageSales || null == mListFragment)
+	     Log.d("XXX", "updateGarageSalesList ");
+
+    	if (null == mGarageSales || null == mListFragment)
             return;
         ArrayList<GarageSale> filteredList = GarageSaleFilter.filterGarageSales(mGarageSales, ((float) mMaxDistance), mMaxNumberOfGarageSales,search.getQuery());
        
-        GarageSaleArrayAdapter adapter = new GarageSaleArrayAdapter(this
+        adapter = new GarageSaleArrayAdapter(this
                 , R.layout.row, filteredList);
          mListFragment.setListAdapter(adapter);
          
@@ -352,27 +374,43 @@ public class MainActivity extends ActionBarActivity implements
     }
     
     private void downloadGarageSales() {
-        mDownloading = true;
+	     Log.d("XXX", "downloadGarageSales ");
+
+    	mDownloading = true;
         showProgress();
+               
         getSupportLoaderManager().initLoader(0, null, this);
+        
+        
+        
+        
     }
 
     private void hideProgress() {
-        if (null != mRefreshMenuItem)
+	     Log.d("XXX", "hideProgress ");
+
+    	if (null != mRefreshMenuItem)
             mRefreshMenuItem.setVisible(true);
-        setSupportProgressBarIndeterminateVisibility(false);
+    	//setProgress(Window.PROGRESS_END);
+        setProgressBarIndeterminateVisibility(false);
+        
     }
 
     private void showProgress() {
-        if (null != mRefreshMenuItem)
+	     Log.d("XXX", "showProgress ");
+
+    	if (null != mRefreshMenuItem)
             mRefreshMenuItem.setVisible(false);
-        setSupportProgress(Window.PROGRESS_END);
-        setSupportProgressBarIndeterminateVisibility(true);
+        
+        setProgressBarIndeterminateVisibility(true);
+        
     }
     
     @Override
     public void onGarageSaleTap(GarageSale garagesale) {
-        if (garagesale == null) return;
+	     Log.d("XXX", "onGarageSaleTap ");
+
+    	if (garagesale == null) return;
             Intent intent = new Intent(this, GarageSaleActivity.class);
             intent.putExtra(GarageSaleActivity.GARAGESALE_KEY, garagesale);
             startActivity(intent);
@@ -381,7 +419,9 @@ public class MainActivity extends ActionBarActivity implements
     
     @Override
     public Loader<ArrayList<GarageSale>> onCreateLoader(int i, Bundle bundle) {
-        AsyncTaskLoader<ArrayList<GarageSale>> loader = new AsyncTaskLoader<ArrayList<GarageSale>>(this) {
+	     Log.d("XXX", "OnCreateLoader ");
+
+    	AsyncTaskLoader<ArrayList<GarageSale>> loader = new AsyncTaskLoader<ArrayList<GarageSale>>(this) {
             @Override
             public ArrayList<GarageSale> loadInBackground() {
             	return GarageSaleApi.getGarageSalesFromServer(this.getContext());	
@@ -393,8 +433,10 @@ public class MainActivity extends ActionBarActivity implements
     
     @Override
     public void onLoadFinished(Loader<ArrayList<GarageSale>> objectLoader, ArrayList<GarageSale> results) {
-        mDownloading = false;
-        getSupportLoaderManager().destroyLoader(0);
+	     Log.d("XXX", "onLoadFinished ");
+	     
+    	mDownloading = false;
+        getLoaderManager().destroyLoader(0); 
         hideProgress();
         AlertDialog.Builder builderNoConnection = new AlertDialog.Builder(MainActivity.this);
         builderNoConnection.setTitle("No Connection")
@@ -418,13 +460,14 @@ public class MainActivity extends ActionBarActivity implements
 											+ "Internet to download from server.")
 							.setNeutralButton("Close", null);
 				
-				 	//if (null == resultsLocal || (resultsLocal.size() == 0)) {
+				 	if (null == resultsLocal || (resultsLocal.size() == 0)) {
 		                    AlertDialog dialogNoFile = builderNoFile.create();
 							dialogNoFile.show();
 		                    resultsLocal = new ArrayList<GarageSale>();
-		            //}
+		            }
 		            
 		            mGarageSales = resultsLocal;
+		            updateGarageSalesDisplay();
 			}  
 			});
         AlertDialog dialogNoConnection = builderNoConnection.create();
@@ -439,13 +482,15 @@ public class MainActivity extends ActionBarActivity implements
     
     @Override
     public void onLoaderReset(Loader<ArrayList<GarageSale>> objectLoader) {
+	     Log.d("XXX", "onLoaderReset ");
 
     }
 
 	@Override
 	public void onGarageSaleLostFocus(GarageSale GarageSaleItem) {
 		// TODO Auto-generated method stub
-		
+	     Log.d("XXX", "onGarageSaleLostFocus ");
+
 	}
 
 
