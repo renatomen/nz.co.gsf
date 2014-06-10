@@ -97,6 +97,9 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		//LoaderManager.enableDebugLogging(true);
+		
 		// Set defaults before we do anything else.
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         Log.d("XXX", "OnCreate");
@@ -105,7 +108,7 @@ public class MainActivity extends ActionBarActivity implements
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		search = (SearchView) findViewById(R.id.searchView);
 		search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			
@@ -163,6 +166,8 @@ public class MainActivity extends ActionBarActivity implements
 			
 			mListFragment = new GarageSaleListFragment();
 			mMapFragment  = new NZMapFragment();
+	
+			
 			
 			mListFragment.setOnGarageSaleTapListener(this);
 	        mMapFragment.setOnGarageSaleTapListener(this);
@@ -184,6 +189,7 @@ public class MainActivity extends ActionBarActivity implements
 	            }
 	            
 	        }
+	       
 	        
 	        updateItemsFromPreferences();
 	        updateGarageSalesDisplay();
@@ -209,6 +215,8 @@ public class MainActivity extends ActionBarActivity implements
 	         mPreferencesUpdated = false;
 	         updateItemsFromPreferences();
 	         downloadGarageSales();
+	         
+		        
 	     }
 	     
 	 }
@@ -378,12 +386,8 @@ public class MainActivity extends ActionBarActivity implements
 
     	mDownloading = true;
         showProgress();
-               
-        getSupportLoaderManager().initLoader(0, null, this);
         
-        
-        
-        
+        getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     private void hideProgress() {
@@ -435,8 +439,8 @@ public class MainActivity extends ActionBarActivity implements
     public void onLoadFinished(Loader<ArrayList<GarageSale>> objectLoader, ArrayList<GarageSale> results) {
 	     Log.d("XXX", "onLoadFinished ");
 	     
-    	mDownloading = false;
-        getLoaderManager().destroyLoader(0); 
+    	//mDownloading = false;
+        //getSupportLoaderManager().destroyLoader(0); 
         hideProgress();
         AlertDialog.Builder builderNoConnection = new AlertDialog.Builder(MainActivity.this);
         builderNoConnection.setTitle("No Connection")

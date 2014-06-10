@@ -163,7 +163,7 @@ public class GarageSaleDetailFragment extends Fragment {
         			mMap = (NZMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.garagesale_map);
         			if (!(mMap == null)) { 
         				Route destRoute = new Route();
-        				destRoute.drawRoute(mMap.getMap(), getActivity(), routePoints,false, Route.LANGUAGE_ENGLISH, true);
+        				destRoute.drawRoute(mMap.getMap(), getActivity(), routePoints,true, Route.LANGUAGE_ENGLISH, true);
         			} 
         		}
         	});
