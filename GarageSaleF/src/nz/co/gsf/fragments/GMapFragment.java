@@ -18,7 +18,7 @@ import nz.co.gsf.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class NZMapFragment extends SupportMapFragment implements GoogleMap.OnMarkerClickListener {
+public class GMapFragment extends SupportMapFragment implements GoogleMap.OnMarkerClickListener {
     private ArrayList<GarageSale> mGarageSale;
     private static final double NZ_CENTRE_LATITUDE = -41;
     private static final double NZ_CENTRE_LONGITUDE = 173;
@@ -37,8 +37,12 @@ public class NZMapFragment extends SupportMapFragment implements GoogleMap.OnMar
      * For this reason, we always manually set the camera to the location specified in the getArguments() Bundle, or if
      * this does not exist then to the default location. We do this when we expect the Map to be ready - in the
      * onActivityCreated call.
+     * 
+     * AMONG OTHERS.. GREATLY INSPIRED IN
+     * https://code.google.com/p/iosched/source/browse/android/src/main/java/com/google/android/apps/iosched/ui/MapFragment.java
+     * 
      */
-    public NZMapFragment() {
+    public GMapFragment() {
         mMarkerIdToGarageSale = new HashMap<String, GarageSale>();
         mMarkers = new ArrayList<Marker>();
         mMarkerImageContainer = new HashMap<String, BitmapDescriptor>();
@@ -54,12 +58,12 @@ public class NZMapFragment extends SupportMapFragment implements GoogleMap.OnMar
                 0); // bearing 
 */    }
 
-    public static NZMapFragment newInstance() {
-        return new NZMapFragment();
+    public static GMapFragment createInstance() {
+        return new GMapFragment();
     }
 
-    public static NZMapFragment newInstance(GoogleMapOptions options) {
-        NZMapFragment fragment = new NZMapFragment();
+    public static GMapFragment newInstance(GoogleMapOptions options) {
+        GMapFragment fragment = new GMapFragment();
 
         // See http://stackoverflow.com/a/13783463/1217087
         Bundle args = new Bundle();

@@ -8,7 +8,7 @@ import nz.co.gsf.preferences.DefaultPrefs;
 import nz.co.gsf.utilapi.GarageSaleApi;
 import nz.co.gsf.R;
 import nz.co.gsf.fragments.GarageSaleListFragment;
-import nz.co.gsf.fragments.NZMapFragment;
+import nz.co.gsf.fragments.GMapFragment;
 import nz.co.gsf.garagesale.GarageSale;
 import nz.co.gsf.garagesale.GarageSaleArrayAdapter;
 import nz.co.gsf.garagesale.GarageSaleFilter;
@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity implements
 	Check: http://stackoverflow.com/questions/7810019/
 		   http://stackoverflow.com/questions/21709446/
 */	
-	private NZMapFragment mMapFragment;
+	private GMapFragment mMapFragment;
 	private GarageSaleListFragment mListFragment;
 	private SearchView search;
 
@@ -167,7 +167,7 @@ public class MainActivity extends ActionBarActivity implements
 					.setTabListener(this));
 			
 			mListFragment = new GarageSaleListFragment();
-			mMapFragment  = new NZMapFragment();
+			mMapFragment  = new GMapFragment();
 	
 			
 			

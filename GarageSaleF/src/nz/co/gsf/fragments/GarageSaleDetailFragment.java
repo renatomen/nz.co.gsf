@@ -159,8 +159,8 @@ public class GarageSaleDetailFragment extends Fragment {
         			ArrayList<LatLng> routePoints = new ArrayList<LatLng>();
         			routePoints.add(GarageSaleApi.getCurrentLocation(getActivity().getApplicationContext()));
         			routePoints.add(mGarageSale.getLatLng());
-        			NZMapFragment mMap = new NZMapFragment();
-        			mMap = (NZMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.garagesale_map);
+        			GMapFragment mMap = new GMapFragment();
+        			mMap = (GMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.garagesale_map);
         			if (!(mMap == null)) { 
         				Route destRoute = new Route();
         				destRoute.drawRoute(mMap.getMap(), getActivity(), routePoints,true, Route.LANGUAGE_ENGLISH, true);

@@ -20,7 +20,10 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
+/*
+ * AMONG OTHERS... Thanks to Android in Action - Chapter 12
+ * Android in Action, Third Edition W. Frank Ableson, Robi Sen, Chris King and C. 
+*/
 public class GarageSaleListHandler extends DefaultHandler {
 
     Handler handler = null;

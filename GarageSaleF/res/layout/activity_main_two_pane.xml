@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="fragment_map"
-            android:name="nz.co.gsf.fragments.NZMapFragment" />
+            android:name="nz.co.gsf.fragments.GMapFragment" />
 
         <LinearLayout
             android:orientation="vertical"

@@ -19,6 +19,6 @@
         android:id="@+id/garagesale_map"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        class="nz.co.gsf.fragments.NZMapFragment"/>
+        class="nz.co.gsf.fragments.GMapFragment"/>
 
 </LinearLayout>
