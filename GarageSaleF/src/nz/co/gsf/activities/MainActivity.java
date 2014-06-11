@@ -113,7 +113,6 @@ public class MainActivity extends ActionBarActivity implements
 			
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				// TODO Auto-generated method stub
 				 
 			     updateGarageSalesDisplay();
 				return true;
@@ -121,7 +120,6 @@ public class MainActivity extends ActionBarActivity implements
 			
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				// TODO Auto-generated method stub
 				 
 			     updateGarageSalesDisplay();
 				return true;

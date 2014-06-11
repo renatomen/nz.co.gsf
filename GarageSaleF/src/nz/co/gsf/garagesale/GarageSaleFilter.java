@@ -11,12 +11,14 @@ public class GarageSaleFilter {
         ArrayList<GarageSale> filteredResult = new ArrayList<GarageSale>();
         
         for (GarageSale g : garagesale) {
-        	if ((!key.toString().trim().isEmpty()) ||
+        	if ((!key.toString().trim().isEmpty()) &&
         		 ( (g.getDescription().toUpperCase().indexOf(key.toString().toUpperCase())>=0) ||
         				(g.getAddress().toUpperCase().indexOf(key.toString().toUpperCase())>=0) ||
         				(g.getSuburb().toUpperCase().indexOf(key.toString().toUpperCase())>=0) ||
         				(g.getRegion().toUpperCase().indexOf(key.toString().toUpperCase())>=0)))
         	{
+        		if (g.getRoundedDistance() >= maxDistance) filteredResult.add(g);
+        	} else if (key.toString().trim().isEmpty()){
         		if (g.getRoundedDistance() >= maxDistance) filteredResult.add(g);
         	}        
         } 
