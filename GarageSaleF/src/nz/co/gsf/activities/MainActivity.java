@@ -44,8 +44,13 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity implements 
 		OnSharedPreferenceChangeListener, ActionBar.TabListener, GarageSaleTapListener,
 		LoaderManager.LoaderCallbacks<ArrayList<GarageSale>>{
-
-	
+/*
+	The application has a bug. When changing the orientation, the Loader is not 
+	correctly managed by the LoadManager. It is due to an apparent incompatibility
+	of the Loader and Fragments or ViewPager.
+	Check: http://stackoverflow.com/questions/7810019/
+		   http://stackoverflow.com/questions/21709446/
+*/	
 	private NZMapFragment mMapFragment;
 	private GarageSaleListFragment mListFragment;
 	private SearchView search;
