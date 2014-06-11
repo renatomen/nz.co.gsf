@@ -211,9 +211,8 @@ public class GarageSaleApi {
 	}
 	
 	public static LatLng getCurrentLocation(Context c){
-		context = c;
-	
-		LocationManager locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
+		Context ctx = c;
+		LocationManager locationManager = (LocationManager) ctx.getSystemService(ctx.LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_LOW);
         //criteria.setPowerRequirement(Criteria.POWER_LOW);
@@ -233,7 +232,7 @@ public class GarageSaleApi {
         
         locationManager.requestLocationUpdates(bestProvider, 300000, 0, locationListener);
         location = locationManager.getLastKnownLocation(bestProvider);
-        geocoder = new Geocoder(context);
+        geocoder = new Geocoder(ctx);
         currentLocation = new LatLng(location.getLatitude(),location.getLongitude());		
 		return currentLocation;
 		
