@@ -13,6 +13,13 @@ import nz.co.gsf.garagesale.GarageSale;
 import nz.co.gsf.garagesale.GarageSaleArrayAdapter;
 import nz.co.gsf.garagesale.GarageSaleFilter;
 import nz.co.gsf.garagesale.GarageSaleTapListener;
+
+import android.content.Context;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -38,19 +45,16 @@ import android.view.Window;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  *
  */
 public class MainActivity extends ActionBarActivity implements 
 		OnSharedPreferenceChangeListener, ActionBar.TabListener, GarageSaleTapListener,
 		LoaderManager.LoaderCallbacks<ArrayList<GarageSale>>{
-/*
-	The application has a bug. When changing the orientation, the Loader is not 
-	correctly managed by the LoadManager. It is due to an apparent incompatibility
-	of the Loader and Fragments or ViewPager.
-	Check: http://stackoverflow.com/questions/7810019/
-		   http://stackoverflow.com/questions/21709446/
-*/	
+
+	
 	private GMapFragment mMapFragment;
 	private GarageSaleListFragment mListFragment;
 	private SearchView search;
@@ -61,9 +65,6 @@ public class MainActivity extends ActionBarActivity implements
 	
 	GarageSaleArrayAdapter adapter;
     
-	final String tag = "GSF:Main";
-
-   
     /**
      * True if the system is currently downloading garage sales in the background.
      */
@@ -99,6 +100,29 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	ViewPager mViewPager;
 
+    public static Location location;
+
+    private LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location loc) {
+            location = loc;
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+    };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -111,21 +135,30 @@ public class MainActivity extends ActionBarActivity implements
         // Note this turns it on by default (so only on 2.x devices).
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_main);
-		
+
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        String bestProvider = LocationManager.NETWORK_PROVIDER;
+
+
+        locationManager.requestLocationUpdates(bestProvider, 300000, 0, locationListener);
+        location = locationManager.getLastKnownLocation(bestProvider);
+
 		search = (SearchView) findViewById(R.id.searchView);
 		search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				 
+
 			     updateGarageSalesDisplay();
 				return true;
 			}
 			
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				 
+
 			     updateGarageSalesDisplay();
 				return true;
 			}
@@ -340,7 +373,7 @@ public class MainActivity extends ActionBarActivity implements
 	  /**
      * Called to update the garagesales display. Will update whichever view is
      * selected at the moment. If you have new garagesales to display, be sure to set
-     * {@link #mgaragesales} first, then call this method.
+     * {link #mgaragesales} first, then call this method.
      */
     private void updateGarageSalesDisplay() {
 	     Log.d("XXX", "updateGarageSalesDisplay ");
@@ -351,7 +384,7 @@ public class MainActivity extends ActionBarActivity implements
     }
     
     /**
-     * Updates the map view. Please use {@link #updategaragesalesDisplay} instead.
+     * Updates the map view. Please use {link #updategaragesalesDisplay} instead.
      */
     private void updateGarageSalesMap() {
 	     Log.d("XXX", "updateGarageSalesMap ");
@@ -362,7 +395,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     /**
-     * Updates the list view. Please use {@link #updategaragesalesDisplay} instead.
+     * Updates the list view. Please use {link #updategaragesalesDisplay} instead.
      */
     private void updateGarageSalesList() {
 	     Log.d("XXX", "updateGarageSalesList ");
@@ -494,7 +527,6 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public void onGarageSaleLostFocus(GarageSale GarageSaleItem) {
-		// TODO Auto-generated method stub
 	     Log.d("XXX", "onGarageSaleLostFocus ");
 
 	}

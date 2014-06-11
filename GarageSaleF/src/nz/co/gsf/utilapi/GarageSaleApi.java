@@ -15,19 +15,16 @@ import org.xml.sax.XMLReader;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import nz.co.gsf.activities.MainActivity;
 import nz.co.gsf.garagesale.GarageSale;
 import nz.co.gsf.garagesale.GarageSaleList;
 import nz.co.gsf.garagesale.GarageSaleListHandler;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -39,43 +36,17 @@ import nz.co.gsf.preferences.DefaultPrefs;
 public class GarageSaleApi {
 
 	private static GarageSaleList mList = null;
-	private static ProgressDialog myprogress;
     private static Handler progresshandler;
     private static SharedPreferences prefs;
-    private static Context context;
-    private static Message msg;
     private static LatLng currentLocation;
 	private static List<String> providersList;
 	private static String providersListText;
 	private static String providersViewText;
-	private static String bestProvider;
+    private static String bestProvider;
     private static Geocoder geocoder;
-	private static Location location;
-	private static LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location loc) {
-            location = loc;
-        }
 
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-
-        }
-    };
-
-		public static ArrayList<GarageSale> getGarageSalesFromServer(Context c) {
+		public static ArrayList<GarageSale> getGarageSalesFromServer(Context context) {
 		
-		GarageSaleApi.context = c;
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		
 		Looper.prepare();
@@ -181,9 +152,8 @@ public class GarageSaleApi {
 		
 	}
 	
-	public static ArrayList<GarageSale> getGarageSalesFromFile(Context c) {
-		GarageSaleApi.context = c;
-		try {	
+	public static ArrayList<GarageSale> getGarageSalesFromFile(Context context) {
+		try {
 			GarageSaleApi.mList = GarageSaleList.parse(context);
 	        if (GarageSaleApi.mList == null) {
 	            Log.d("GFS", "garageSaleList is null");
@@ -210,10 +180,10 @@ public class GarageSaleApi {
 		return null;
 	}
 	
-	public static LatLng getCurrentLocation(Context c){
-		Context ctx = c;
-		LocationManager locationManager = (LocationManager) ctx.getSystemService(ctx.LOCATION_SERVICE);
-		Criteria criteria = new Criteria();
+	public static LatLng getCurrentLocation(Context context){
+
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_LOW);
         //criteria.setPowerRequirement(Criteria.POWER_LOW);
         criteria.setAltitudeRequired(true);
@@ -224,25 +194,19 @@ public class GarageSaleApi {
             String provider = providersList.get(i);
             providersListText += provider.toUpperCase() + " is " + locationManager.isProviderEnabled(provider) + "\n";
         }
-        
-        bestProvider = (bestProvider != LocationManager.NETWORK_PROVIDER) ?
-                LocationManager.NETWORK_PROVIDER : bestProvider;
-        
         providersViewText=bestProvider.toUpperCase();
-        
-        locationManager.requestLocationUpdates(bestProvider, 300000, 0, locationListener);
-        location = locationManager.getLastKnownLocation(bestProvider);
-        geocoder = new Geocoder(ctx);
-        currentLocation = new LatLng(location.getLatitude(),location.getLongitude());		
+        geocoder = new Geocoder(context);
+        currentLocation = new LatLng(MainActivity.location.getLatitude(),
+                MainActivity.location.getLongitude());
 		return currentLocation;
-		
 	}
 	
 	public static String getCurrentAddress() {
         String address=null;
         List<Address> addresses = null;
         try {
-            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 10);
+            addresses = geocoder.getFromLocation(MainActivity.location.getLatitude(),
+                    MainActivity.location.getLongitude(), 10);
         } catch (IOException e) {
             e.printStackTrace();
         }
