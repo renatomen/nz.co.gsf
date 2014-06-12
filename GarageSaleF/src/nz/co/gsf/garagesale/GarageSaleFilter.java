@@ -18,7 +18,12 @@ public class GarageSaleFilter {
         				(g.getSuburb().toUpperCase().indexOf(key.toString().toUpperCase())>=0) ||
         				(g.getRegion().toUpperCase().indexOf(key.toString().toUpperCase())>=0)))
         	{
-        		if (g.getRoundedDistance() <= maxDistance) filteredResult.add(g);
+        		//When preference is set to ZERO, show everything, regardless of distance.
+        		if (maxDistance > 0) {
+        			if (g.getRoundedDistance() <= maxDistance) filteredResult.add(g);
+        		} else {
+        			filteredResult.add(g);
+        		}
         	} else if (key.toString().trim().isEmpty()){
 
         		//When preference is set to ZERO, show everything, regardless of distance.

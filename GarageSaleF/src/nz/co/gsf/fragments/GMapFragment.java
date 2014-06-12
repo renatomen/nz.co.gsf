@@ -30,13 +30,7 @@ public class GMapFragment extends SupportMapFragment implements GoogleMap.OnMark
     private HashMap<String, GarageSale> mMarkerIdToGarageSale;
 
     /**
-     * For some reason, calling setArguments in the empty constructor doesn't work to specify an initial camera
-     * position, where as when we call it from the static methods it does. The empty constructor is the one called when
-     * inflating from XML.
-     *
-     * For this reason, we always manually set the camera to the location specified in the getArguments() Bundle, or if
-     * this does not exist then to the default location. We do this when we expect the Map to be ready - in the
-     * onActivityCreated call.
+     
      * 
      * AMONG OTHERS.. GREATLY INSPIRED IN
      * https://code.google.com/p/iosched/source/browse/android/src/main/java/com/google/android/apps/iosched/ui/MapFragment.java
@@ -58,19 +52,6 @@ public class GMapFragment extends SupportMapFragment implements GoogleMap.OnMark
                 0); // bearing 
 */    }
 
-    public static GMapFragment createInstance() {
-        return new GMapFragment();
-    }
-
-    public static GMapFragment newInstance(GoogleMapOptions options) {
-        GMapFragment fragment = new GMapFragment();
-
-        // See http://stackoverflow.com/a/13783463/1217087
-        Bundle args = new Bundle();
-        args.putParcelable("MapOptions", options); //obtained by decompiling google-play-services.jar
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
