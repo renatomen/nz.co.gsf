@@ -11,7 +11,7 @@
         android:title="@string/pref_apiServer_url"/>
     
      <nz.co.gsf.preferences.SeekBarPreference
-        android:defaultValue="25"
+        android:defaultValue="0"
         android:key="pref_maxDisplayDistance"
         custom:seekBarMin="0"
         android:max="1000"
@@ -19,7 +19,7 @@
         android:title="@string/pref_maxDisplayDistance"/>
 
     <nz.co.gsf.preferences.SeekBarPreference
-        android:defaultValue="40"
+        android:defaultValue="10"
         android:key="pref_maxHighlightDistance"
         custom:seekBarMin="0"
         android:max="200"
@@ -27,7 +27,7 @@
         android:title="@string/pref_maxHighlightDistance"/>
 
     <nz.co.gsf.preferences.SeekBarPreference
-        android:defaultValue="20"
+        android:defaultValue="0"
         android:key="pref_numGarageSalesToShow"
         android:max="300"
         android:text=" Garage Sales"

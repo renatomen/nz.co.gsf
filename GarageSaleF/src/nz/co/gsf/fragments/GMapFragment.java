@@ -124,7 +124,7 @@ public class GMapFragment extends SupportMapFragment implements GoogleMap.OnMark
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if(mListener != null) mListener.onGarageSaleLostFocus(null);
+               if(mListener != null) mListener.onGarageSaleLostFocus(null);
             }
         });
         removeAllMarkers();
@@ -150,9 +150,7 @@ public class GMapFragment extends SupportMapFragment implements GoogleMap.OnMark
     }
 
     private BitmapDescriptor getIconForGarageSale(GarageSale q) {
-        if(mMarkerImageContainer.containsKey(q.getFormattedDistance())) {
-            return mMarkerImageContainer.get(q.getFormattedDistance());
-        }
+       
         // Set up the colour for our marker image
         Drawable marker = getResources().getDrawable(R.drawable.mapmarker);
         int markerWidth = marker.getIntrinsicWidth();

@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements
 
 	private boolean mPreferencesUpdated;
 
-	private int mMaxDistance, mMaxNumberOfGarageSales;
+	private int mMaxDistance, mMaxHighlightDistance, mMaxNumberOfGarageSales;
 	
 	GarageSaleArrayAdapter adapter;
     
@@ -85,6 +85,7 @@ public class MainActivity extends ActionBarActivity implements
      */
     private String mSelectedTab;
 
+    private ArrayList<GarageSale> filteredList;
   
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -147,21 +148,28 @@ public class MainActivity extends ActionBarActivity implements
         location = locationManager.getLastKnownLocation(bestProvider);
 
 		search = (SearchView) findViewById(R.id.searchView);
+		search.setFocusableInTouchMode(true);
 		search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-
+				 search.clearFocus();
 			     updateGarageSalesDisplay();
-				return true;
+			     
+			     
+				 return true;
 			}
 			
 			@Override
 			public boolean onQueryTextChange(String newText) {
 
 			     updateGarageSalesDisplay();
-				return true;
+				 return true;
 			}
+			
+			
+			
+			 
 		});
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
@@ -199,10 +207,19 @@ public class MainActivity extends ActionBarActivity implements
 					.setText(getString(R.string.tab_title_map))
 					.setTabListener(this));
 			
-			mListFragment = new GarageSaleListFragment();
-			mMapFragment  = new GMapFragment();
-	
+			if (mListFragment == null) mListFragment = new GarageSaleListFragment();
+			mListFragment.setRetainInstance(true);
+			if (mMapFragment == null) mMapFragment  = new GMapFragment();
+			mMapFragment.setRetainInstance(true);
 			
+			
+			filteredList = new ArrayList<GarageSale>();
+			if (adapter == null) {
+				adapter = new GarageSaleArrayAdapter(this
+						, R.layout.row, filteredList);
+			}
+			
+			mListFragment.setListAdapter(adapter);
 			
 			mListFragment.setOnGarageSaleTapListener(this);
 	        mMapFragment.setOnGarageSaleTapListener(this);
@@ -259,12 +276,10 @@ public class MainActivity extends ActionBarActivity implements
 	 private void updateItemsFromPreferences() {
 	     Log.d("XXX", "updateItemsFromPreferences");
 
-	      SharedPreferences prefs = PreferenceManager
-	              .getDefaultSharedPreferences(this);
-	      mMaxNumberOfGarageSales = prefs.getInt(
-	              GSPreferenceActivity.KEY_PREF_NUM_GARAGESALES_TO_SHOW, DefaultPrefs.NUM_GARAGESALES_TO_DISPLAY);
-	      mMaxDistance = prefs.getInt(GSPreferenceActivity.KEY_PREF_MAX_DISPLAY_DISTANCE,
-	              DefaultPrefs.MAX_DISPLAY_DISTANCE);
+	      SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	      mMaxNumberOfGarageSales = prefs.getInt(GSPreferenceActivity.KEY_PREF_NUM_GARAGESALES_TO_SHOW, DefaultPrefs.NUM_GARAGESALES_TO_DISPLAY);
+	      mMaxDistance = prefs.getInt(GSPreferenceActivity.KEY_PREF_MAX_DISPLAY_DISTANCE, DefaultPrefs.MAX_DISPLAY_DISTANCE);
+	      mMaxHighlightDistance = prefs.getInt(GSPreferenceActivity.KEY_PREF_MAX_HIGHLIGHT_DISTANCE, DefaultPrefs.MAX_HIGHLIGHT_DISTANCE);
 	 }
 	    
 	@Override
@@ -307,9 +322,11 @@ public class MainActivity extends ActionBarActivity implements
 	                || key.equals(GSPreferenceActivity.KEY_PREF_MAX_HIGHLIGHT_DISTANCE)
 	                || key.equals(GSPreferenceActivity.KEY_PREF_NUM_GARAGESALES_TO_SHOW)) {
 	            mPreferencesUpdated = true;
+	            adapter=null;
 	        }
 	        updateItemsFromPreferences();
-	        updateGarageSalesDisplay();	    }
+	        updateGarageSalesDisplay();	    
+	        }
 
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
@@ -391,7 +408,11 @@ public class MainActivity extends ActionBarActivity implements
 
     	if (null == mGarageSales || null == mMapFragment)
             return;
-        mMapFragment.setGarageSales(GarageSaleFilter.filterGarageSales(mGarageSales, ((float) mMaxDistance) , mMaxNumberOfGarageSales,search.getQuery()));
+        
+    	filteredList.clear();
+     	filteredList = GarageSaleFilter.filterGarageSales(mGarageSales, ((float) mMaxDistance), mMaxNumberOfGarageSales,search.getQuery());
+    	mMapFragment.setGarageSales(filteredList);
+    	
     }
 
     /**
@@ -402,11 +423,20 @@ public class MainActivity extends ActionBarActivity implements
 
     	if (null == mGarageSales || null == mListFragment)
             return;
-        ArrayList<GarageSale> filteredList = GarageSaleFilter.filterGarageSales(mGarageSales, ((float) mMaxDistance), mMaxNumberOfGarageSales,search.getQuery());
+        filteredList.clear();
+    	filteredList = GarageSaleFilter.filterGarageSales(mGarageSales, ((float) mMaxDistance), mMaxNumberOfGarageSales,search.getQuery());
        
-        adapter = new GarageSaleArrayAdapter(this
-                , R.layout.row, filteredList);
-         mListFragment.setListAdapter(adapter);
+        if (adapter==null) {
+        	adapter = new GarageSaleArrayAdapter(this,R.layout.row, filteredList);
+        	mListFragment.setListAdapter(null);
+        	mListFragment.setListAdapter(adapter);
+        	
+        } else {
+        	adapter.clear();
+        	adapter.addAll(filteredList);
+        	adapter.notifyDataSetChanged();
+        }
+    	
          
          TextView gsCount = (TextView) this.findViewById(R.id.gscount);
          if (filteredList.size() == 0) {
@@ -421,7 +451,6 @@ public class MainActivity extends ActionBarActivity implements
 
     	mDownloading = true;
         showProgress();
-        
         getSupportLoaderManager().restartLoader(0, null, this);
     }
 
