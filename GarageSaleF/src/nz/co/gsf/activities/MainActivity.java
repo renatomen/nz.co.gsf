@@ -132,8 +132,6 @@ public class MainActivity extends ActionBarActivity implements
 		// Set defaults before we do anything else.
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         Log.d("XXX", "OnCreate");
-        // Request Feature must be called before adding content.
-        // Note this turns it on by default (so only on 2.x devices).
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 
