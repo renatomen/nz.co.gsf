@@ -69,6 +69,7 @@ public class GarageSale implements Parcelable{
     }
     
     private GarageSale(Parcel in) {
+    	
     	this(in.readString(),
     		 in.readString(),
     		 in.readString(),
@@ -77,6 +78,7 @@ public class GarageSale implements Parcelable{
     		 in.readString(),
     		 in.readString(),
     		 in.readString());	
+    	
     }
     
     public static void setContext(Context c) {
@@ -167,6 +169,10 @@ public class GarageSale implements Parcelable{
 
     public void setGeocode(String geocode) {
         this.geocode = geocode;
+        if (this.geocode.isEmpty()) {
+        	setDistance((double) 0);
+        	return;
+        }
         String[] coords = geocode.split(",");
 
         if ((coords != null) && (coords.length == 2)) {
@@ -265,6 +271,8 @@ public class GarageSale implements Parcelable{
          if ((coords != null) && (coords.length == 2)) {
              mLatLng = new LatLng(Double.parseDouble(coords[0]), Double
                      .parseDouble(coords[1]));
+         } else {
+        	 
          }
     	    
     	return mLatLng;

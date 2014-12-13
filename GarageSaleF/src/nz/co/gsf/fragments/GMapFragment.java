@@ -101,13 +101,18 @@ public class GMapFragment extends SupportMapFragment implements GoogleMap.OnMark
         ArrayList<GarageSale> garagesales = new ArrayList<GarageSale>();
         garagesales.add(garagesale);
         setGarageSales(garagesales);
-        if (centerOnGaragesale) {
-            mDefaultCameraPosition = new CameraPosition(garagesale.getLatLng(), // target
+        if (centerOnGaragesale ) {
+        	
+        	// Avoid app crashing when geocode is missing
+        	if (garagesale.getGeocode().isEmpty() == false) {
+        	mDefaultCameraPosition = new CameraPosition(garagesale.getLatLng(), // target
                     getDefaultZoomForDevice() + 2, // zoom
                     0, // tilt
                     0); // bearing
-            setInitialCameraPosition(null);
-        }
+           }
+           
+           setInitialCameraPosition(null);
+        } 
     }
 
     public void setGarageSales(ArrayList<GarageSale> garagesales) {
@@ -129,13 +134,13 @@ public class GMapFragment extends SupportMapFragment implements GoogleMap.OnMark
         });
         removeAllMarkers();
         for (GarageSale q : mGarageSale) {
-            addGarageSaleMarker(map, q);
+            	addGarageSaleMarker(map, q);
         }
 
     }
 
     private void addGarageSaleMarker(GoogleMap map, GarageSale q) {
-        if (map == null || q == null) return;
+        if (map == null || q == null || q.getGeocode().isEmpty() == true) return;
         MarkerOptions markerOptions = getMarkerForGarageSale(q);
         Marker marker = map.addMarker(markerOptions);
         mMarkerIdToGarageSale.put(marker.getId(), q);

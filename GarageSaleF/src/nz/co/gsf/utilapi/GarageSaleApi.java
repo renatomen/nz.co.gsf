@@ -87,8 +87,8 @@ public class GarageSaleApi {
 			URL url = new URL(prefs.getString(GSPreferenceActivity.KEY_PREF_API_SERVER_URL, DefaultPrefs.API_SERVER_URL));
 			
             // get our data via the url class
-            is = new InputSource(url.openStream());
-
+            is = new InputSource(url.openStream()); 
+            
             // create the factory
             SAXParserFactory factory = SAXParserFactory.newInstance();
 
